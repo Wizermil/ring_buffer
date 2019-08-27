@@ -27,7 +27,7 @@ namespace wiz {
     template <typename T>
     void erase_rnd(benchmark::State& state) noexcept {
         std::size_t const max{static_cast<std::size_t>(state.range(0))};
-        std::vector<std::size_t> rnd;
+        std::vector<std::ptrdiff_t> rnd;
         rnd.reserve(max);
         for (std::size_t i = 0; i < max; ++i) {
             rnd.emplace_back(get_random(0, max - i - 1));

@@ -78,6 +78,10 @@ namespace wiz {
     BENCHMARK_TEMPLATE(erase_seq, std::deque<int>)->Arg(256);
     BENCHMARK_TEMPLATE(erase_seq, ring_buffer<int>)->Arg(256);
 
+    BENCHMARK_TEMPLATE(erase_rnd, std::vector<int>)->Arg(256);
+    BENCHMARK_TEMPLATE(erase_rnd, std::deque<int>)->Arg(256);
+    BENCHMARK_TEMPLATE(erase_rnd, ring_buffer<int>)->Arg(256);
+
     //    BENCHMARK_TEMPLATE(access_seq, std::vector<int>)
     //        ->Arg(256)
     //        ->Arg(512)
