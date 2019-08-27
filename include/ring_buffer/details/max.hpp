@@ -1,9 +1,11 @@
 #pragma once
 
+#include <ring_buffer/details/config.hpp>
+
 namespace wiz::details::algorithm {
 
     template <typename T>
-    static constexpr T const& max(T const& l, T const& r) noexcept {
+    RING_BUFFER_HIDE_FROM_ABI constexpr T const& max(T const& l, T const& r) noexcept {
         return l > r ? l : r;
     }
 

@@ -8,7 +8,8 @@ int mv_assign = 0;
 int dtr = 0;
 
 nat::nat()
-: cnt{++ctr} {}
+: cnt{++ctr} {
+}
 
 nat::nat(int c0)
 : cnt{c0} {
@@ -42,7 +43,8 @@ nat::~nat() {
 }
 
 nat_no_move::nat_no_move()
-: cnt{++ctr} {}
+: cnt{++ctr} {
+}
 nat_no_move::nat_no_move(nat_no_move const& other) noexcept
 : cnt{other.cnt} {
     ++cpy;

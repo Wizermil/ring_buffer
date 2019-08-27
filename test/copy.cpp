@@ -9,7 +9,7 @@
 
 TEST_CASE("ring_buffer copy", "[ring_buffer]") {
     SECTION("ring_buffer(ring_buffer const& other)") {
-        wiz::ring_buffer<int> a{2, 1};
+        wiz::ring_buffer<int> a(2, 1);
         wiz::ring_buffer<int> b{a};
         REQUIRE_FALSE(b.empty());
         REQUIRE(b.size() == 2);
@@ -18,7 +18,7 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
 
         {
             reset_static_nat_counter();
-            wiz::ring_buffer<nat> c{3, nat{}};
+            wiz::ring_buffer<nat> c(3, nat{});
             wiz::ring_buffer<nat> d{c};
             REQUIRE_FALSE(d.empty());
             REQUIRE(d.size() == 3);
@@ -39,7 +39,7 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
     }
 
     SECTION("ring_buffer& operator=(ring_buffer const& other)") {
-        wiz::ring_buffer<int> const a{2, 1};
+        wiz::ring_buffer<int> const a(2, 1);
         wiz::ring_buffer<int> b = a;
         REQUIRE_FALSE(b.empty());
         REQUIRE(b.size() == 2);
@@ -48,7 +48,7 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
 
         {
             reset_static_nat_counter();
-            wiz::ring_buffer<nat> c{3, nat{}};
+            wiz::ring_buffer<nat> c(3, nat{});
             wiz::ring_buffer<nat> d = c;
             REQUIRE_FALSE(d.empty());
             REQUIRE(d.size() == 3);
@@ -67,7 +67,7 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
         REQUIRE(f.empty());
         REQUIRE(f.size() == 0);
 
-        wiz::ring_buffer<int> g{2, 1};
+        wiz::ring_buffer<int> g(2, 1);
         wiz::ring_buffer<int> const h;
         g = h;
         REQUIRE(g.empty());
@@ -75,7 +75,7 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
 
         {
             reset_static_nat_counter();
-            wiz::ring_buffer<nat> i{2, nat{}};
+            wiz::ring_buffer<nat> i(2, nat{});
             wiz::ring_buffer<nat> const j;
             i = j;
             REQUIRE(i.empty());
@@ -90,7 +90,7 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
 
         {
             reset_static_nat_counter();
-            wiz::ring_buffer<nat> k{2, nat{}};
+            wiz::ring_buffer<nat> k(2, nat{});
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wself-assign-overloaded"
             // UB ring_buffer doesn't handle this case
@@ -110,8 +110,8 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
 
         {
             reset_static_nat_counter();
-            wiz::ring_buffer<nat> l{7, nat{}};
-            wiz::ring_buffer<nat> const m{5, nat{}};
+            wiz::ring_buffer<nat> l(7, nat{});
+            wiz::ring_buffer<nat> const m(5, nat{});
             l = m;
             REQUIRE_FALSE(l.empty());
             REQUIRE(l.size() == 5);
@@ -130,8 +130,8 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
 
         {
             reset_static_nat_counter();
-            wiz::ring_buffer<nat> n{5, nat{}};
-            wiz::ring_buffer<nat> const o{7, nat{}};
+            wiz::ring_buffer<nat> n(5, nat{});
+            wiz::ring_buffer<nat> const o(7, nat{});
             n = o;
             REQUIRE_FALSE(n.empty());
             REQUIRE(n.size() == 7);
@@ -152,8 +152,8 @@ TEST_CASE("ring_buffer copy", "[ring_buffer]") {
 
         {
             reset_static_nat_counter();
-            wiz::ring_buffer<nat> p{5, nat{}};
-            wiz::ring_buffer<nat> const q{5, nat{}};
+            wiz::ring_buffer<nat> p(5, nat{});
+            wiz::ring_buffer<nat> const q(5, nat{});
             p = q;
             REQUIRE_FALSE(p.empty());
             REQUIRE(p.size() == 5);

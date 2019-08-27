@@ -10,7 +10,7 @@
 #include "nat.hpp"
 
 TEST_CASE("void pop_front()", "[ring_buffer]") {
-    wiz::ring_buffer<int> a{3, 0};
+    wiz::ring_buffer<int> a(3, 0);
     REQUIRE(a.capacity() == 4);
     REQUIRE(a.size() == 3);
     REQUIRE_FALSE(a.empty());

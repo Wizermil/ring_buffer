@@ -34,7 +34,7 @@ TEST_CASE("void push_back(T const& value)", "[ring_buffer]") {
     REQUIRE(a[1] == 2);
     REQUIRE(a[2] == 3);
 
-    wiz::ring_buffer<int> b{3, 0};
+    wiz::ring_buffer<int> b(3, 0);
     REQUIRE(b.capacity() == 4);
     REQUIRE(b.size() == 3);
     REQUIRE_FALSE(b.empty());
@@ -81,7 +81,7 @@ TEST_CASE("void push_back(T&& value)", "[ring_buffer]") {
     REQUIRE(a[1] == 2);
     REQUIRE(a[2] == 3);
 
-    wiz::ring_buffer<int> b{3, 0};
+    wiz::ring_buffer<int> b(3, 0);
     REQUIRE(b.capacity() == 4);
     REQUIRE(b.size() == 3);
     REQUIRE_FALSE(b.empty());

@@ -12,6 +12,7 @@
 #include "access.hpp"
 #include "constructor.hpp"
 #include "copy.hpp"
+#include "erase.hpp"
 
 namespace wiz {
 
@@ -65,9 +66,17 @@ namespace wiz {
     //    BENCHMARK_TEMPLATE(copy_assign, std::deque<int>)->Args({128, 64});
     //    BENCHMARK_TEMPLATE(copy_assign, ring_buffer<int>)->Args({128, 64});
 
-    BENCHMARK_TEMPLATE(copy_assign, std::vector<int>)->Args({128, 64});
-    BENCHMARK_TEMPLATE(copy_assign, std::deque<int>)->Args({128, 64});
-    BENCHMARK_TEMPLATE(copy_assign, ring_buffer<int>)->Args({128, 64});
+    //    BENCHMARK_TEMPLATE(copy_assign, std::vector<int>)->Args({128, 129});
+    //    BENCHMARK_TEMPLATE(copy_assign, std::deque<int>)->Args({128, 129});
+    //    BENCHMARK_TEMPLATE(copy_assign, ring_buffer<int>)->Args({128, 129});
+
+    //    BENCHMARK_TEMPLATE(copy_assign, std::vector<int>)->Args({128, 64});
+    //    BENCHMARK_TEMPLATE(copy_assign, std::deque<int>)->Args({128, 64});
+    //    BENCHMARK_TEMPLATE(copy_assign, ring_buffer<int>)->Args({128, 64});
+
+    BENCHMARK_TEMPLATE(erase_seq, std::vector<int>)->Arg(256);
+    BENCHMARK_TEMPLATE(erase_seq, std::deque<int>)->Arg(256);
+    BENCHMARK_TEMPLATE(erase_seq, ring_buffer<int>)->Arg(256);
 
     //    BENCHMARK_TEMPLATE(access_seq, std::vector<int>)
     //        ->Arg(256)

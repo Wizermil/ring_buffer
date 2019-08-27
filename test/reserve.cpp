@@ -19,7 +19,7 @@ TEST_CASE("void reserve(size_type new_cap)", "[ring_buffer]") {
     REQUIRE(a.size() == 0);
     REQUIRE(a.capacity() == 1);
 
-    wiz::ring_buffer<int> b{3, 1};
+    wiz::ring_buffer<int> b(3, 1);
     REQUIRE(b.capacity() == 4);
     b.reserve(5);
     REQUIRE_FALSE(b.empty());
@@ -64,7 +64,7 @@ TEST_CASE("void reserve(size_type new_cap)", "[ring_buffer]") {
 
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> d{3, nat{}};
+        wiz::ring_buffer<nat> d(3, nat{});
         REQUIRE(d.capacity() == 4);
         d.reserve(5);
         REQUIRE_FALSE(d.empty());
@@ -96,7 +96,7 @@ TEST_CASE("void reserve(size_type new_cap)", "[ring_buffer]") {
 
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat_no_move> e{3, nat_no_move{}};
+        wiz::ring_buffer<nat_no_move> e(3, nat_no_move{});
         REQUIRE(e.capacity() == 4);
         e.reserve(5);
         REQUIRE_FALSE(e.empty());

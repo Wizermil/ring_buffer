@@ -5,12 +5,13 @@
 
 #include <ring_buffer/details/bitop_unsigned_integer.hpp>
 #include <ring_buffer/details/clz.hpp>
+#include <ring_buffer/details/config.hpp>
 #include <ring_buffer/details/rotr.hpp>
 
 namespace wiz::details::bit {
 
     template <typename T, std::enable_if_t<bitop_unsigned_integer<T>::value>* = nullptr>
-    constexpr int countl_zero(T t) noexcept {
+    RING_BUFFER_HIDE_FROM_ABI constexpr int countl_zero(T t) noexcept {
         static_assert(bitop_unsigned_integer<T>::value, "countl_zero requires unsigned");
         if (t == 0) {
             return std::numeric_limits<T>::digits;

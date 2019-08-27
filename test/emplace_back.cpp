@@ -35,7 +35,7 @@ TEST_CASE("void emplace_back(Args&&... args)", "[ring_buffer]") {
 
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> b{4, nat{}};
+        wiz::ring_buffer<nat> b(4, nat{});
         b.pop_front();
         b.pop_front();
         b.pop_front();
@@ -72,7 +72,7 @@ TEST_CASE("void emplace_back(Args&&... args)", "[ring_buffer]") {
 
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> c{4, nat{}};
+        wiz::ring_buffer<nat> c(4, nat{});
         c.pop_front();
         c.pop_front();
         c.push_back(nat{});

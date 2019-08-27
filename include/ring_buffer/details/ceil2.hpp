@@ -5,12 +5,13 @@
 #include <type_traits>
 
 #include <ring_buffer/details/bitop_unsigned_integer.hpp>
+#include <ring_buffer/details/config.hpp>
 #include <ring_buffer/details/countl_zero.hpp>
 
 namespace wiz::details::bit {
 
     template <typename T, std::enable_if_t<bitop_unsigned_integer<T>::value>* = nullptr>
-    constexpr T ceil2(T t) noexcept {
+    RING_BUFFER_HIDE_FROM_ABI constexpr T ceil2(T t) noexcept {
         if (t < 2) {
             return 1;
         }

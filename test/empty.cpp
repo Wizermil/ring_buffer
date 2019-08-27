@@ -8,7 +8,7 @@
 #include "nat.hpp"
 
 TEST_CASE("[[nodiscard]] bool empty() const noexcept", "[ring_buffer]") {
-    wiz::ring_buffer<int> a{3, 1};
+    wiz::ring_buffer<int> a(3, 1);
     REQUIRE_FALSE(a.empty());
 
     wiz::ring_buffer<int> b;

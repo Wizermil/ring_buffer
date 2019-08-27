@@ -3,6 +3,8 @@
 #include <catch2/catch.hpp>
 #pragma clang diagnostic pop
 
+#include <array>
+
 #include <ring_buffer/ring_buffer.hpp>
 
 #include "nat.hpp"
@@ -36,7 +38,7 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
     REQUIRE(b[1] == 5);
     REQUIRE(b[2] == 5);
 
-    wiz::ring_buffer<int> c{2, 0};
+    wiz::ring_buffer<int> c(2, 0);
     c.assign(0, 1);
     REQUIRE(c.empty());
     REQUIRE(c.size() == 0);
@@ -75,7 +77,7 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
     // decrease
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> e{5, nat{}};
+        wiz::ring_buffer<nat> e(5, nat{});
         e.assign(3, nat{});
         REQUIRE_FALSE(e.empty());
         REQUIRE(e.size() == 3);
@@ -93,7 +95,7 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
     // increase
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> f{3, nat{}};
+        wiz::ring_buffer<nat> f(3, nat{});
         f.assign(4, nat{});
         REQUIRE_FALSE(f.empty());
         REQUIRE(f.size() == 4);
@@ -112,7 +114,7 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
     // increase + capacity increase
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> g{3, nat{}};
+        wiz::ring_buffer<nat> g(3, nat{});
         g.assign(5, nat{});
         REQUIRE_FALSE(g.empty());
         REQUIRE(g.size() == 5);
@@ -130,7 +132,7 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
     REQUIRE(dtr == 2 + 3 + 5);
 
     reset_static_nat_counter();
-    wiz::ring_buffer<nat> h{3, nat{}};
+    wiz::ring_buffer<nat> h(3, nat{});
     h.assign(0, nat{});
     REQUIRE(h.empty());
     REQUIRE(h.size() == 0);
@@ -180,14 +182,14 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
 
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> j{3, nat{}};
+        wiz::ring_buffer<nat> j(3, nat{});
         j.pop_front();
         j.pop_front();
         j.pop_front();
         j.push_back(nat{});
         j.pop_front();
 
-        wiz::ring_buffer<nat> k{3, nat{}};
+        wiz::ring_buffer<nat> k(3, nat{});
         k.pop_front();
         k.pop_front();
         k.push_back(nat{});
@@ -212,7 +214,7 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
 
     {
         reset_static_nat_counter();
-        wiz::ring_buffer<nat> l{3, nat{}};
+        wiz::ring_buffer<nat> l(3, nat{});
         l.pop_front();
         l.pop_front();
         l.pop_front();
@@ -223,7 +225,7 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
         REQUIRE(l[0].cnt == 2);
         REQUIRE(l[1].cnt == 3);
 
-        wiz::ring_buffer<nat> m{3, nat{}};
+        wiz::ring_buffer<nat> m(3, nat{});
         m.pop_front();
         m.pop_front();
         m.push_back(nat{});
@@ -247,4 +249,72 @@ TEST_CASE("assign(size_type count, T const& value)", "[ring_buffer]") {
     REQUIRE(mv == 4);
     REQUIRE(mv_assign == 0);
     REQUIRE(dtr == 6 + 6 + 4);
+}
+
+TEST_CASE("void assign(InputIt*, InputIt*)", "[ring_buffer]") {
+    {
+        std::array<int, 4> const a{1, 2, 3, 4};
+        wiz::ring_buffer<int> b;
+        b.assign(a.begin(), a.end());
+        REQUIRE_FALSE(b.empty());
+        REQUIRE(b.size() == 4);
+        REQUIRE(b.capacity() == 4);
+        REQUIRE(b[0] == 1);
+        REQUIRE(b[1] == 2);
+        REQUIRE(b[2] == 3);
+        REQUIRE(b[3] == 4);
+    }
+
+    {
+        reset_static_nat_counter();
+        std::array<nat, 4> const c{};
+        wiz::ring_buffer<nat> d;
+        d.assign(c.begin(), c.end());
+        REQUIRE_FALSE(d.empty());
+        REQUIRE(d.size() == 4);
+        REQUIRE(d.capacity() == 4);
+        REQUIRE(d[0].cnt == 1);
+        REQUIRE(d[1].cnt == 2);
+        REQUIRE(d[2].cnt == 3);
+        REQUIRE(d[3].cnt == 4);
+    }
+    REQUIRE(ctr == 4);
+    REQUIRE(cpy == 4);
+    REQUIRE(cpy_assign == 0);
+    REQUIRE(mv == 0);
+    REQUIRE(mv_assign == 0);
+    REQUIRE(dtr == 8);
+}
+
+TEST_CASE("void assign(std::initializer_list<T>)", "[ring_buffer]") {
+    {
+        wiz::ring_buffer<int> a;
+        a.assign({1, 2, 3, 4});
+        REQUIRE_FALSE(a.empty());
+        REQUIRE(a.size() == 4);
+        REQUIRE(a.capacity() == 4);
+        REQUIRE(a[0] == 1);
+        REQUIRE(a[1] == 2);
+        REQUIRE(a[2] == 3);
+        REQUIRE(a[3] == 4);
+    }
+
+    {
+        reset_static_nat_counter();
+        wiz::ring_buffer<nat> b;
+        b.assign({nat{}, nat{}, nat{}, nat{}});
+        REQUIRE_FALSE(b.empty());
+        REQUIRE(b.size() == 4);
+        REQUIRE(b.capacity() == 4);
+        REQUIRE(b[0].cnt == 1);
+        REQUIRE(b[1].cnt == 2);
+        REQUIRE(b[2].cnt == 3);
+        REQUIRE(b[3].cnt == 4);
+    }
+    REQUIRE(ctr == 4);
+    REQUIRE(cpy == 4);
+    REQUIRE(cpy_assign == 0);
+    REQUIRE(mv == 0);
+    REQUIRE(mv_assign == 0);
+    REQUIRE(dtr == 8);
 }
