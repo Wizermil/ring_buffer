@@ -29,25 +29,25 @@ namespace wiz {
     template <typename T>
     bool operator!=(ring_buffer<T> const&, ring_buffer<T> const&);
 
-    //    template <typename T>
-    //    bool operator<(ring_buffer<T> const&, ring_buffer<T> const&);
-    //
-    //    template <typename T>
-    //    bool operator<=(ring_buffer<T> const&, ring_buffer<T> const&);
-    //
-    //    template <typename T>
-    //    bool operator>(ring_buffer<T> const&, ring_buffer<T> const&);
-    //
-    //    template <typename T>
-    //    bool operator>=(ring_buffer<T> const&, ring_buffer<T> const&);
+//    template <typename T>
+//    bool operator<(ring_buffer<T> const&, ring_buffer<T> const&);
+//
+//    template <typename T>
+//    bool operator<=(ring_buffer<T> const&, ring_buffer<T> const&);
+//
+//    template <typename T>
+//    bool operator>(ring_buffer<T> const&, ring_buffer<T> const&);
+//
+//    template <typename T>
+//    bool operator>=(ring_buffer<T> const&, ring_buffer<T> const&);
 
     template <typename T>
     void swap(ring_buffer<T>&, ring_buffer<T>&) noexcept;
 
-    //    template <typename T, typename U>
-    //    void erase(ring_buffer<T>& c, U const& value);
-    //    template <typename T, typename Pred>
-    //    void erase_if(ring_buffer<T>& c, Pred&& pred);
+//    template <typename T, typename U>
+//    void erase(ring_buffer<T>& c, U const& value);
+//    template <typename T, typename Pred>
+//    void erase_if(ring_buffer<T>& c, Pred&& pred);
 
     template <typename T>
     class ring_buffer {
@@ -132,10 +132,10 @@ namespace wiz {
 
         friend bool operator==<T>(ring_buffer const&, ring_buffer const&);
         friend bool operator!=<T>(ring_buffer const&, ring_buffer const&);
-        //        friend bool operator< <T>(ring_buffer const&, ring_buffer const&);
-        //        friend bool operator<= <T>(ring_buffer const&, ring_buffer const&);
-        //        friend bool operator> <T>(ring_buffer const&, ring_buffer const&);
-        //        friend bool operator>= <T>(ring_buffer const&, ring_buffer const&);
+//        friend bool operator< <T>(ring_buffer const&, ring_buffer const&);
+//        friend bool operator<= <T>(ring_buffer const&, ring_buffer const&);
+//        friend bool operator> <T>(ring_buffer const&, ring_buffer const&);
+//        friend bool operator>= <T>(ring_buffer const&, ring_buffer const&);
 
     public:
         using iterator = _iterator;
@@ -235,7 +235,7 @@ namespace wiz {
     template <typename T>
     template <typename InputIt>
     ring_buffer<T>::ring_buffer(InputIt* first, InputIt* last) {
-        if (size_t const sz{static_cast<size_type>(last - first)}; RING_BUFFER_LIKELY(sz > 0)) {
+        if (size_type const sz{static_cast<size_type>(last - first)}; RING_BUFFER_LIKELY(sz > 0)) {
             _capacity = details::bit::ceil2(sz);
             _head = sz;
             _buf = _malloc(_capacity);
@@ -245,7 +245,7 @@ namespace wiz {
 
     template <typename T>
     ring_buffer<T>::ring_buffer(ring_buffer<T> const& other) {
-        if (size_t const sz{other.size()}; RING_BUFFER_LIKELY(sz > 0)) {
+        if (size_type const sz{other.size()}; RING_BUFFER_LIKELY(sz > 0)) {
             _capacity = details::bit::ceil2(sz);
             _head = sz;
             _buf = _malloc(_capacity);
@@ -261,7 +261,7 @@ namespace wiz {
 
     template <typename T>
     ring_buffer<T>::ring_buffer(std::initializer_list<T> init) {
-        if (size_t const sz{init.size()}; RING_BUFFER_LIKELY(sz > 0)) {
+        if (size_type const sz{init.size()}; RING_BUFFER_LIKELY(sz > 0)) {
             _capacity = details::bit::ceil2(sz);
             _head = sz;
             _buf = _malloc(_capacity);
@@ -589,19 +589,17 @@ namespace wiz {
 
     template <typename T>
     RING_BUFFER_HIDE_FROM_ABI inline void ring_buffer<T>::_assign(ring_buffer<T> const& other) noexcept {
-        if (size_type const src_sz{other.size()}; src_sz <= _capacity) {
-            size_type const src_tail{other._mask(other._tail)}, src_head{src_tail + src_sz};
+        if (size_type const src_sz{other.size()}, src_tail{other._mask(other._tail)}, src_head{src_tail + src_sz}; src_sz <= _capacity) {
             size_type const dst_tail{_mask(_tail)}, dst_sz{size()}, dst_head{dst_tail + dst_sz};
 
             if (dst_sz >= src_sz) {
-                details::algorithm::split_copy_assign(other._buf + src_tail, other._buf + src_tail + src_sz, other._buf, other._capacity, _buf + dst_tail, _buf,
-                                                      _capacity);
+                details::algorithm::split_copy_assign(other._buf + src_tail, other._buf + src_head, other._buf, other._capacity, _buf + dst_tail, _buf, _capacity);
                 details::algorithm::split_destruct_placement(_buf + dst_tail + src_sz, _buf + dst_head, _buf, _capacity);
             } else {
                 details::algorithm::split_copy_assign(other._buf + src_tail, other._buf + src_tail + dst_sz, other._buf, other._capacity, _buf + dst_tail, _buf,
                                                       _capacity);
-                details::algorithm::split_copy_placement(other._buf + src_tail + dst_sz, other._buf + src_head, other._buf, other._capacity,
-                                                         _buf + dst_tail + dst_sz, _buf, _capacity);
+                details::algorithm::split_copy_placement(other._buf + src_tail + dst_sz, other._buf + src_head, other._buf, other._capacity, _buf + dst_head,
+                                                         _buf, _capacity);
             }
 
             _head = _tail + src_sz;
@@ -612,7 +610,7 @@ namespace wiz {
             _head = src_sz;
             _tail = 0;
             _buf = _malloc(_capacity);
-            details::algorithm::split_copy_placement(other._buf + other._tail, other._buf + other._tail + src_sz, other._buf, other._capacity, _buf);
+            details::algorithm::split_copy_placement(other._buf + src_tail, other._buf + src_head, other._buf, other._capacity, _buf);
         }
     }
 
@@ -627,7 +625,7 @@ namespace wiz {
                 details::algorithm::split_destruct_placement(_buf + dst_tail + src_sz, _buf + dst_head, _buf, _capacity);
             } else {
                 details::algorithm::split_copy_assign(first, first + dst_sz, _buf + dst_tail, _buf, _capacity);
-                details::algorithm::split_copy_placement(first + dst_sz, last, _buf + dst_tail + dst_sz, _buf, _capacity);
+                details::algorithm::split_copy_placement(first + dst_sz, last, _buf + dst_head, _buf, _capacity);
             }
             _head = _tail + src_sz;
         } else {
@@ -683,24 +681,24 @@ namespace wiz {
         return !operator==(lhs, rhs);
     }
 
-    //    template <typename T>
-    //    bool operator<(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
-    //    }
-    //
-    //    template <typename T>
-    //    bool operator<=(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
-    //
-    //    }
-    //
-    //    template <typename T>
-    //    bool operator>(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
-    //
-    //    }
-    //
-    //    template <typename T>
-    //    bool operator>=(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
-    //
-    //    }
+//    template <typename T>
+//    bool operator<(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
+//    }
+//
+//    template <typename T>
+//    bool operator<=(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
+//
+//    }
+//
+//    template <typename T>
+//    bool operator>(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
+//
+//    }
+//
+//    template <typename T>
+//    bool operator>=(ring_buffer<T> const& lhs, ring_buffer<T> const& rhs) {
+//
+//    }
 
     template <typename T>
     void swap(ring_buffer<T>& lhs, ring_buffer<T>& rhs) noexcept {

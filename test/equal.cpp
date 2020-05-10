@@ -16,18 +16,18 @@ TEST_CASE("bool operator==(ring_buffer<T> const&, ring_buffer<T> const&)", "[rin
 
     {
         wiz::ring_buffer<int> const c{1, 2, 3};
-        wiz::ring_buffer<int> const d{1, 2, 3};
+        wiz::ring_buffer<int> d{1, 2, 3};
         REQUIRE((c == d));
     }
 
     {
-        wiz::ring_buffer<int> const e{1, 2, 3};
+        wiz::ring_buffer<int> e{1, 2, 3};
         wiz::ring_buffer<int> const f{1, 2, 4};
         REQUIRE_FALSE((e == f));
     }
 
     {
-        wiz::ring_buffer<int> const g{1, 2, 3};
+        wiz::ring_buffer<int> g{1, 2, 3};
         REQUIRE((g == g));
     }
 }

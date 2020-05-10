@@ -81,6 +81,8 @@
 		2221BE8122D8B76D00A3098E /* libios_google_benchmark.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2221BE3322D8B45500A3098E /* libios_google_benchmark.a */; };
 		2221BEA122D8B7EC00A3098E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2221BEA022D8B7EC00A3098E /* main.cpp */; };
 		2221BEAD22D8B92A00A3098E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2221BEA022D8B7EC00A3098E /* main.cpp */; };
+		22388AA22466FECB00E7762B /* long_run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22388AA12466FECB00E7762B /* long_run.cpp */; };
+		22388AA32466FECB00E7762B /* long_run.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22388AA12466FECB00E7762B /* long_run.cpp */; };
 		22673A382301CAB8003525DD /* initializer_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22673A372301CAB8003525DD /* initializer_list.cpp */; };
 		22673A392301CAB8003525DD /* initializer_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22673A372301CAB8003525DD /* initializer_list.cpp */; };
 		227A301A23031779005C6DE9 /* swap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 227A301923031779005C6DE9 /* swap.cpp */; };
@@ -193,6 +195,7 @@
 		2221BEA022D8B7EC00A3098E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2221BEA622D8B8F500A3098E /* macos_test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = macos_test; sourceTree = BUILT_PRODUCTS_DIR; };
 		22266E3A22F46F90007CEE94 /* get_random.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = get_random.hpp; sourceTree = "<group>"; };
+		22388AA12466FECB00E7762B /* long_run.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = long_run.cpp; sourceTree = "<group>"; };
 		2243EC7022F338D400EB26C5 /* ceil2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ceil2.hpp; sourceTree = "<group>"; };
 		2243EC7422F33E6000EB26C5 /* countl_zero.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = countl_zero.hpp; sourceTree = "<group>"; };
 		2243EC7522F33F0700EB26C5 /* bitop_unsigned_integer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bitop_unsigned_integer.hpp; sourceTree = "<group>"; };
@@ -361,6 +364,7 @@
 				22FFF88323041676007651CE /* split_move_backward.cpp */,
 				22B511742313D25200098814 /* split_move.cpp */,
 				227A301923031779005C6DE9 /* swap.cpp */,
+				22388AA12466FECB00E7762B /* long_run.cpp */,
 			);
 			name = test;
 			path = ../test;
@@ -681,6 +685,7 @@
 				22194D99230160CF000CAA49 /* resize.cpp in Sources */,
 				2221BEA122D8B7EC00A3098E /* main.cpp in Sources */,
 				22FFF882230404C0007651CE /* erase.cpp in Sources */,
+				22388AA32466FECB00E7762B /* long_run.cpp in Sources */,
 				22194DA223016154000CAA49 /* emplace_back.cpp in Sources */,
 				22194D8123015ECF000CAA49 /* copy.cpp in Sources */,
 				22673A392301CAB8003525DD /* initializer_list.cpp in Sources */,
@@ -710,6 +715,7 @@
 				22194D98230160CF000CAA49 /* resize.cpp in Sources */,
 				2221BEAD22D8B92A00A3098E /* main.cpp in Sources */,
 				22FFF881230404C0007651CE /* erase.cpp in Sources */,
+				22388AA22466FECB00E7762B /* long_run.cpp in Sources */,
 				22194DA123016154000CAA49 /* emplace_back.cpp in Sources */,
 				22194D8023015ECF000CAA49 /* copy.cpp in Sources */,
 				22673A382301CAB8003525DD /* initializer_list.cpp in Sources */,

@@ -131,11 +131,11 @@ namespace wiz::details::algorithm {
                 if (in_wrap <= out_wrap) {
                     f(first, first + in_wrap, out);
                     f(in_beg, in_beg + out_wrap - in_wrap, out + in_wrap);
-                    f(in_beg + out_wrap - in_wrap, last - in_wrap, out_beg);
+                    f(in_beg + out_wrap - in_wrap, last - in_cap, out_beg);
                 } else {
                     f(first, first + out_wrap, out);
                     f(first + out_wrap, first + in_wrap, out_beg);
-                    f(in_beg, last - in_wrap, out_beg + in_wrap - out_wrap);
+                    f(in_beg, last - in_cap, out_beg + in_wrap - out_wrap);
                 }
                 break;
             }
@@ -363,10 +363,10 @@ namespace wiz::details::algorithm {
                 size_t const in_wrap{static_cast<size_t>(in_cap_ptr - first)}, out_wrap{static_cast<size_t>(out_cap_ptr - out)};
                 if (in_wrap <= out_wrap) {
                     return f(first, first + in_wrap, out) && f(in_beg, in_beg + out_wrap - in_wrap, out + in_wrap) &&
-                        f(in_beg + out_wrap - in_wrap, last - in_wrap, out_beg);
+                        f(in_beg + out_wrap - in_wrap, last - in_cap, out_beg);
                 } else {
                     return f(first, first + out_wrap, out) && f(first + out_wrap, first + in_wrap, out_beg) &&
-                        f(in_beg, last - in_wrap, out_beg + in_wrap - out_wrap);
+                        f(in_beg, last - in_cap, out_beg + in_wrap - out_wrap);
                 }
                 break;
             }
