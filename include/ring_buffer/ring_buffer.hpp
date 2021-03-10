@@ -641,7 +641,7 @@ namespace wiz {
 
     template <typename T>
     RING_BUFFER_HIDE_FROM_ABI inline void ring_buffer<T>::_resize(size_type new_cap) {
-        assert(new_cap > 0);
+        assert(new_cap > 0 || (new_cap & (new_cap - 1)) != 0);
         size_type const tail{_mask(_tail)}, sz{details::algorithm::min(new_cap, size())}, head{tail + sz};
         ring_buffer<T>::pointer buf = _malloc(new_cap);
         details::algorithm::split_move_placement(_buf + tail, _buf + head, _buf, _capacity, buf);

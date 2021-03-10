@@ -438,7 +438,7 @@ namespace wiz::details::algorithm {
                 wrap_result{static_cast<size_t>(result - last)};
             move_backward(last - in_cap - wrap_last, last - in_cap, result - in_cap);
             if (sz > wrap_result) {
-                move_backward(in_cap_ptr - wrap_result, in_cap_ptr, result - in_cap);
+                move_backward(in_cap_ptr - wrap_result, in_cap_ptr, result - in_cap - wrap_last);
                 return move_backward(first, last - wrap_last - wrap_result, in_cap_ptr);
             } else {
                 return move_backward(first, in_cap_ptr, result - in_cap - wrap_last);
@@ -478,7 +478,7 @@ namespace wiz::details::algorithm {
         } else if (RING_BUFFER_UNLIKELY(first > in_cap_ptr)) {
             // in : [result, ..., in_cap, ..., first, ..., last]
             size_t const wrap{static_cast<size_t>(in_cap_ptr - result)}, sz{static_cast<size_t>(last - first)};
-            if (sz > wrap) {
+            if (sz >= wrap) {
                 move(first - in_cap, first + wrap - in_cap, result);
                 return move(first + wrap - in_cap, last - in_cap, in_beg);
             } else {
@@ -489,7 +489,7 @@ namespace wiz::details::algorithm {
             size_t const wrap_last{static_cast<size_t>(last - in_cap_ptr)}, sz{static_cast<size_t>(first - result)},
                 wrap_first{static_cast<size_t>(in_cap_ptr - first)};
             move(first, in_cap_ptr, result);
-            if (sz >= wrap_last) {
+            if (sz > wrap_last) {
                 return move(in_beg, last - in_cap, result + wrap_first);
             } else {
                 move(in_beg, in_beg + sz, result + wrap_first);

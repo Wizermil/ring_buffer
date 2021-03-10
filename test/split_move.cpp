@@ -26,7 +26,7 @@ TEST_CASE("constexpr OutputIt* split_move(InputIt*, InputIt*, InputIt*, size_t, 
             int *buf{a.begin()}, *tail{buf + 2}, *head{tail + 3}, *remove{tail + 2};
             auto ita = wiz::details::algorithm::split_move(remove + 1, head, buf, 4, remove);
             REQUIRE((a == std::array<int, 4>{3, -1, 1, 2}));
-            REQUIRE(ita == buf + 4);
+            REQUIRE(ita == buf);
         }
         {
             std::array<int, 4> b{3, 4, 1, 2};
@@ -58,7 +58,7 @@ TEST_CASE("constexpr OutputIt* split_move(InputIt*, InputIt*, InputIt*, size_t, 
             int *buf{b.begin()}, *tail{buf + 1}, *head{tail + 4}, *remove{tail + 2};
             auto itb = wiz::details::algorithm::split_move(remove + 1, head, buf, 4, remove);
             REQUIRE((b == std::array<int, 4>{4, 1, 2, 4}));
-            REQUIRE(itb == buf + 4);
+            REQUIRE(itb == buf);
         }
     }
 
